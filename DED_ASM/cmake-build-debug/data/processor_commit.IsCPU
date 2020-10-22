@@ -1,0 +1,114 @@
+#define comma ,
+#define DO_P_PUSH(x) ;pushIntoStack (processor->stack , x)
+#undef comma
+#define DO_P_POP() popFromStack (processor->stack)
+#define NO_PARAMS 0
+
+DEF_CPU (ADD, 1, NO_PARAMS, {DO_P_PUSH (DO_P_POP() + DO_P_POP());} )
+
+DEF_CPU (SUB, 17, NO_PARAMS,
+{
+    double temp = DO_P_POP();
+    DO_P_PUSH (DO_P_POP() - temp);
+})
+
+DEF_CPU (MUL, 2, NO_PARAMS, {DO_P_PUSH (DO_P_POP() * DO_P_POP());} )
+
+DEF_CPU (DIV, 18, NO_PARAMS,
+{
+    double temp = DO_P_POP();
+    DO_P_PUSH (DO_P_POP() / temp);
+})
+
+DEF_CPU (IN, 3, NO_PARAMS,
+{
+    double value;
+    scanf ("%lg", &value);
+    DO_P_PUSH (value);
+})
+
+DEF_CPU (OUT, 19, NO_PARAMS, {printf ("%lg", DO_P_POP());})
+
+DEF_CPU (SIN, 115, NO_PARAMS, {DO_P_PUSH (sin(DO_P_POP()) );})
+
+DEF_CPU (COS, 99, NO_PARAMS, {DO_P_PUSH (cos(DO_P_POP()) );})
+
+DEF_CPU (POW, 112, NO_PARAMS,
+{
+    double temp = DO_P_POP();
+    DO_P_PUSH(pow (DO_P_POP(), temp));
+})
+
+DEF_CPU (SQRT, 113, NO_PARAMS, {DO_P_PUSH (sqrt (DO_P_POP()));})
+
+DEF_CPU (DUMP, 100, NO_PARAMS, {processorDump (processor, ARGNAME(processor->errorCode), __LINE__ );} )
+
+#define DEF_REG(name,value) case value: DO_P_PUSH(processor->name); \
+                                        break;
+
+DEF_CPU (PUSH, 4, 1,
+{
+    if (!processor->code[processor->rip++])
+    {
+        double* chVers = (double*) (processor->code + processor->rip)
+        DO_P_PUSH (*chVers);
+        processor->rip += 8;
+    }
+
+
+    else
+    {
+        int regval = processor->code[processor->rip++];
+        switch (regval)
+        {
+
+            DEF_REG (rax, 0)
+
+            DEF_REG (rbx, 1)
+
+            DEF_REG (rcx, 2)
+
+            DEF_REG (rdx, 3)
+            default:
+                printf ("No such register\n");
+        }
+    }
+})
+
+#undef DEF_REG
+#define DEF_REG(name,value) case value: processor->name = DO_P_POP(); \
+                                break;
+
+DEF_CPU (POP, 20, 1,
+{
+    if (!processor->code[processor->rip++])
+        DO_P_POP ();
+
+    else
+    {
+        int regval = processor->code[processor->rip++];
+        switch (regval)
+        {
+        DEF_REG (rax, 0)
+
+        DEF_REG (rbx, 1)
+
+        DEF_REG (rcx, 2)
+
+        DEF_REG (rdx, 3)
+        default:
+            printf ("No such register\n");
+        }
+    }
+})
+#undef DEF_REG
+
+DEF_CPU (NEG, 126, NO_PARAMS, {DO_P_PUSH (- DO_P_POP());})
+
+DEF_CPU (COMPL_ERROR, 127, NO_PARAMS, {printf ("COMPILATION ERROR");})
+
+DEF_CPU (HLT, 0, NO_PARAMS, {return 0;})
+
+#undef NO_PARAMS
+#undef DO_P_PUSH
+#undef DO_P_POP
