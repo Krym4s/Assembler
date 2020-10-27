@@ -13,6 +13,10 @@ stdio.h
 -
 data/processor_commit.IsCPU
 C:/Users/egolg/CLionProjects/DED_ASM/cmake-build-debug/data/processor_commit.IsCPU
+data/processor_commit.IsCPU
+C:/Users/egolg/CLionProjects/DED_ASM/cmake-build-debug/data/processor_commit.IsCPU
+data/registers.IsCPU
+C:/Users/egolg/CLionProjects/DED_ASM/cmake-build-debug/data/registers.IsCPU
 
 C:/Users/egolg/CLionProjects/DED_ASM/cmake-build-debug/IsE_Assembler.h
 IsE_Stack.h

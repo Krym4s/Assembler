@@ -1,9 +1,137 @@
+IN; enter a coefficient
+POP rax
+
+IN; enter b coefficient
+POP rbx
+
+IN; enter c coefficient
+POP rcx
+
+CALL : 4
+
+POP rdx
+PUSH rdx
+OUT
+PUSH rdx
+PUSH 0
+JE : 8
+PUSH rdx
+PUSH 1
+JE : 9
+PUSH rdx
+PUSH 2
+JE : 10
+PUSH rdx
+PUSH 3
+JE : 11
+PUSH 4
+OUT
+HLT
+
+
+1:
+PUSH rbx
+PUSH 0
+JE : 2
+
+PUSH rcx
+NEG
+PUSH rbx
+DIV
+PUSH 1
+RET
+
+2:
+PUSH rcx
+PUSH 0
+JE : 3
+
+PUSH 0
+RET
+
+3:
+PUSH 3
+RET
+
+
+4:
+PUSH rax
+PUSH 0
+JE : 1
+
+PUSH rbx
+PUSH 2
+POW
+PUSH 4
+PUSH rax
+PUSH rcx
+MUL
+MUL
+SUB
+POP rdx
+
+PUSH rdx
+PUSH 0
+JB : 6
+
+PUSH rdx
+PUSH 0
+JE : 5
+
+PUSH rdx
+SQRT
+POP rdx
+
+PUSH rbx
+NEG
+PUSH rdx
 ADD
+PUSH 2
+PUSH rax
 MUL
 DIV
+
+PUSH rbx
+NEG
+PUSH rdx
+NEG
 ADD
-PUSH 345.12;
-PUSH rax; mda comment tip
-PUSH 123.14
-POP
-POP rbx
+PUSH 2
+PUSH rax
+MUL
+DIV
+
+PUSH 2
+
+RET
+
+
+5:
+PUSH rbx
+NEG
+PUSH 2
+PUSH rax
+MUL
+DIV
+PUSH 1
+RET
+
+6:
+PUSH 0
+RET
+
+
+8:
+HLT
+
+9:
+OUT
+HLT
+
+10:
+OUT
+OUT
+HLT
+
+11:
+HLT

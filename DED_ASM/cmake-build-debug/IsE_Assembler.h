@@ -31,4 +31,8 @@ int assemblerListing (int begN, int nMembers, char* bytes,const char* command, F
 
 int createByteCode (char* ByteFileName, char* IsE_ByteCode, const int version, const int nMembers);
 
+int findReg (char* registerName);
+
+int findInput (int argc, char *argv[], char** input);
+
 #endif //DED_ASM_ISE_ASSEMBLER_H
